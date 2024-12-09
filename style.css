@@ -1,0 +1,186 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+header{
+    background-color: rgb(22, 21, 21);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 2px solid rgb(0, 255, 157);
+}
+
+
+main{
+    padding: 20px 80px;
+    background-color: rgb(24, 22, 22);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.card{
+    display: flex;
+    justify-content: center;
+    height: 250px;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    border-radius: 5px 0px 0px 10px;
+    border: 2px solid rgb(0, 255, 157);
+    border-right: none;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+.container img{
+    width: 100%;
+    height:80%;
+    background-color: chartreuse;
+    z-index: 0;
+}
+
+.order_btn{
+    display: flex;
+    height: 100%;
+}
+
+hr{
+    border: 1px solid rgb(3, 255, 137);
+}
+
+.delvary_btn_container{
+    display: flex;
+    justify-content: center;
+    background-color: rgb(24, 22, 22);
+    height: 100%;
+}
+
+#delvary_btn{
+    padding: 6px;
+    font-size: 1.3em;
+    font-weight: 700;
+    background-color: rgb(27, 26, 26);
+    color: white;
+    cursor: pointer;
+    border: none;
+    transition: 1s ease;
+    width: fit-content;
+    border-radius: 0px 5px 5px 0px;
+    border: 2px solid rgb(3, 255, 137);
+    border-left:none;
+    
+}
+
+#delvary_btn:hover{
+    background-color: rgb(0, 255, 136);
+    color: black;
+}
+
+.container #product_name{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background-color: rgb(43, 38, 38);
+    color: white;
+    padding: 10px;
+    font-size: 1.2em;
+    border-radius: 0px 0px 10px 0px;
+    max-width:80px;
+    text-align: center;
+    min-width: 30px;
+    border: none;
+    outline: none;
+}
+
+#special_price{
+    background-color: rgb(43, 38, 38);
+    color: white;
+    font-size: 1.2em;
+    width: 100%;
+    border: none;
+    text-align: center;
+    z-index: 2;
+}
+
+#quantity{
+    height: 100%;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: rgb(0, 255, 157);
+    font-size: 1.2em;
+    font-weight: 700;
+    top: 0px;
+    right: 0px;
+    z-index: 2;
+}
+
+.quantity_container{
+    border: 2px solid rgb(0, 255, 157);
+    display: flex;
+    flex-direction: column;
+    border-radius: 0px 0px 5px 0px;
+    border-left: none;
+    overflow: hidden;
+    height: 100%;
+}
+
+.quantity_container button{
+    height: 50%;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border: none;
+    font-size: 1.3em;
+    cursor: pointer;
+}
+
+table thead th{
+    font-weight: 800;
+    font-size: 1em;
+    background-color: rgb(0, 253, 156);
+    text-transform: uppercase;
+}
+
+table tbody td{
+    font-size: 1.2em;
+    font-weight: 500;
+    color: white;
+}
+
+table{
+    width: 100%;
+    text-align: center;
+    background-color: rgb(31, 30, 30);
+    border: none;
+}
+
+th,td{
+    padding: 5px;
+}
+
+#delete{
+    padding: 10px;
+    border-radius: 20px;
+    text-align: center;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    font-weight: 900;
+}
+#delete:hover{
+    background-color: rgb(148, 147, 145);
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <header>
+        <h1>احمد للمنظفات</h1>
+    </header>
+
+
+    <main>
+        <!-- card_1 -->
+        <div class="card">
+
+            <div class="container">
+                <img src="dishwashing_liquid_image.jpeg" alt="">
+                <div class="order_btn">
+                    <p type="text" id="product_name">Fairy</p>
+                    <input type="number" id="special_price" value="20">
+                    <p id="quantity">0</p>
+                </div>
+            </div>
+
+            <div class="quantity_container">
+                <button onclick="increase_quantity(this)" id="increase">+</button>
+                <hr>
+                <button onclick="decrease_quantity(this)" id="decrease">-</button>
+            </div>
+
+            <div class="delvary_btn_container">
+                <button id="delvary_btn"><i class="fa-solid fa-share-from-square"></i></button>
+            </div>
+        </div>
+        <!-- card_2 -->
+        <div class="card">
+
+            <div class="container">
+                <img src="dishwashing_liquid_image.jpeg" alt="">
+                <div class="order_btn">
+                    <p type="text" id="product_name">hamza</p>
+                    <input type="number" id="special_price" value="10">
+                    <p id="quantity">0</p>
+                </div>
+            </div>
+
+            <div class="quantity_container">
+                <button onclick="increase_quantity(this)" id="increase">+</button>
+                <hr>
+                <button onclick="decrease_quantity(this)" id="decrease">-</button>
+            </div>
+
+            <div class="delvary_btn_container">
+        
+                <button id="delvary_btn"><i class="fa-solid fa-share-from-square"></i></button>
+            </div>
+        </div>
+
+    </main>
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>product_name</th>
+                <th>price</th>
+                <th>Quantity</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            <!-- <tr> -->
+                <!-- <td>1</td>
+                <td>Fairy</td>
+                <td  class="c">0</td>
+                <td>20</td>
+                <td class="total_price"></td> -->
+                <!-- <td><button id="delete">Delete</button></td> -->
+            <!-- </tr> -->
+        </tbody>
+    </table>
+
+
+
+    <script src="https://kit.fontawesome.com/0aa1a67fcd.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
