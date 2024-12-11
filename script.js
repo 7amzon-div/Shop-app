@@ -145,12 +145,15 @@ document.querySelectorAll('.delvary_btn_container button').forEach((button) => {
         const productName = card.querySelector('#product_name').textContent;
         const specialPrice = card.querySelector('#special_price').value;
         const quantity = card.querySelector('#quantity').textContent;
+        const total = specialPrice * quantity;
+
 
         // إضافة البيانات إلى LocalStorage
         const newPro = {
             product_name: productName,
             special_price: specialPrice,
             quantity: quantity,
+            total: total,
         };
 
         let dataPro = localStorage.product ? JSON.parse(localStorage.product) : [];
@@ -173,6 +176,7 @@ function showData() {
             <td>${item.product_name}</td>
             <td>شيكل ${item.special_price}</td>
             <td>${item.quantity}</td>
+            <td>${item.total}</td>
             <td><button onClick="deleteData(${i})" id="delete">Delete</button></td>
         </tr>`;
     });
