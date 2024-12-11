@@ -1,4 +1,7 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Cairo:wght@200..1000&family=Galindo&family=Jersey+20&display=swap');
+
+
 *{
     margin: 0;
     padding: 0;
@@ -18,7 +21,7 @@ header{
 
 
 main{
-    padding: 20px 80px;
+    padding: 20px 50px;
     background-color: rgb(24, 22, 22);
     display: flex;
     justify-content: center;
@@ -90,17 +93,18 @@ hr{
 .container #product_name{
     position: absolute;
     left: 0px;
-    top: 0px;
+    bottom: 46px;
     background-color: rgb(43, 38, 38);
     color: white;
-    padding: 10px;
-    font-size: 1.2em;
-    border-radius: 0px 0px 10px 0px;
-    max-width:80px;
+    padding: 7px;
+    font-size: 1.1em;
+    font-family:"Cairo" ;
+    border-radius: 0px 4px 4px 0px;
     text-align: center;
     min-width: 30px;
-    border: none;
-    outline: none;
+    max-width:150px;
+    display: none;
+    border: 1px solid black;
 }
 
 #special_price{
@@ -132,7 +136,6 @@ hr{
     border: 2px solid rgb(0, 255, 157);
     display: flex;
     flex-direction: column;
-    border-radius: 0px 0px 5px 0px;
     border-left: none;
     overflow: hidden;
     height: 100%;
@@ -173,14 +176,20 @@ th,td{
 }
 
 #delete{
-    padding: 10px;
-    border-radius: 20px;
+    padding: 5px;
+    border-radius: 4px;
     text-align: center;
     width: 100%;
     border: none;
     cursor: pointer;
-    font-weight: 900;
+    font-family:"Galindo","Anton", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
+    color: black;
+    letter-spacing: 0.5px;
+    background-color: rgb(0, 253, 55);
 }
 #delete:hover{
-    background-color: rgb(148, 147, 145);
+    background-color: rgb(255, 60, 0);
 }

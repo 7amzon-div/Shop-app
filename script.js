@@ -1,117 +1,191 @@
 
-let product_name = document.getElementById("product_name");
+// let product_name = document.getElementById("product_name");
 
-let special_price = document.getElementById("special_price");
+// let special_price = document.getElementById("special_price");
 
-let quantity = document.getElementById("quantity");
+// let quantity = document.getElementById("quantity");
 
-let table_quantity = document.getElementById("table_quantity");
+// let table_quantity = document.getElementById("table_quantity");
 
-let increase = document.querySelector("#increase"); // +
+// let increase = document.querySelector("#increase"); // +
 
-let decrease = document.querySelector("#decrease"); // -
+// let decrease = document.querySelector("#decrease"); // -
 
-let delvary_btn = document.querySelector("#delvary_btn");
+// let delvary_btn = document.querySelector("#delvary_btn");
 
-let Delete = document.querySelector("#delete");
-
-
-function return_quan(){
-
-return qun_number = parseInt(quantity.textContent);
-
-}
+// let Delete = document.querySelector("#delete");
 
 
-// console.log(special_price.textContent * return_quan());
-function increase_quantity(){
+// function return_quan(){
 
-    let current_quan = return_quan();
+// return qun_number = parseInt(quantity.textContent);
 
-    current_quan += 1;
+// }
 
-    quantity.textContent = current_quan;
 
-    table_quantity.textContent = quantity.textContent;
+// // console.log(special_price.textContent * return_quan());
+// function increase_quantity(){
 
-    total_price.textContent = Number(special_price.value) * Number(return_quan());
-}
+//     let current_quan = return_quan();
 
-function decrease_quantity(){
+//     current_quan += 1;
 
-    let current_quan = return_quan();
+//     quantity.textContent = current_quan;
 
-    if(current_quan != 0){
+//     table_quantity.textContent = quantity.textContent;
+
+//     total_price.textContent = Number(special_price.value) * Number(return_quan());
+// }
+
+// function decrease_quantity(){
+
+//     let current_quan = return_quan();
+
+//     if(current_quan != 0){
         
-        current_quan -= 1;
-    };
+//         current_quan -= 1;
+//     };
 
 
-    quantity.textContent = current_quan;
+//     quantity.textContent = current_quan;
 
-    table_quantity.textContent = quantity.textContent;
+//     table_quantity.textContent = quantity.textContent;
 
-    total_price.textContent = Number(special_price.value) * Number(return_quan());
-}
-
-
-
+//     total_price.textContent = Number(special_price.value) * Number(return_quan());
+// }
 
 
 
 
-// create product
 
-let dataPro;
 
-if (localStorage.product != null) {
-    dataPro = JSON.parse(localStorage.product);
-}else {
-    dataPro = [];
-};
 
-delvary_btn.onclick = function () {
+// // create product
+
+// let dataPro;
+
+// if (localStorage.product != null) {
+//     dataPro = JSON.parse(localStorage.product);
+// }else {
+//     dataPro = [];
+// };
+
+// delvary_btn.onclick = function (g) {
     
-    var newPro = {
-        product_name: product_name.innerHTML,
-        special_price: special_price.value,
-        quantity: quantity.innerHTML,
-    };
+//     var newPro = {
+//         product_name: product_name.innerHTML,
+//         special_price: special_price.value,
+//         quantity: quantity.innerHTML,
+//     };
 
-    dataPro.push(newPro);
-    localStorage.setItem('product', JSON.stringify(dataPro));
+//     dataPro.push(newPro);
+//     localStorage.setItem('product', JSON.stringify(dataPro));
 
-    showData()
-};
-
-
+//     showData()
+// };
 
 
 
-// read
+// // read
 
+// function showData() {
+//     var table = "";
+//     for (let i = 0; i < dataPro.length; i++) {
+//         table += `
+//         <tr>
+//             <td>${i}</td>
+//             <td>${dataPro[i].product_name}</td>
+//             <td>${dataPro[i].special_price}</td>
+//             <td>${dataPro[i].quantity}</td>
+//             <td><button onClick="deleteData(${i})" id="delete">Delete</button></td>
+//         </tr>
+//         `
+//     };
+//     document.getElementById("tbody").innerHTML = table;
+// };
+// showData()
+
+
+// // delete product
+
+// function deleteData(i){
+//     dataPro.splice(i,1);
+//     localStorage.product = JSON.stringify(dataPro);
+//     showData()
+// };
+
+// التعامل مع أزرار + و -
+document.querySelectorAll('.quantity_container button').forEach((button) => {
+    button.addEventListener('click', function () {
+        // تحديد نوع الزر (+ أو -)
+        const isIncrease = button.id === 'increase';
+        const card = button.closest('.card');
+
+        // الوصول إلى الكمية الحالية
+        const quantityElement = card.querySelector('#quantity');
+        let currentQuantity = parseInt(quantityElement.textContent);
+
+        // تعديل الكمية بناءً على نوع الزر
+        if (isIncrease) {
+            currentQuantity += 1;
+        } else if (currentQuantity > 0) {
+            currentQuantity -= 1;
+        }
+
+        // تحديث الكمية في البطاقة
+        quantityElement.textContent = currentQuantity;
+    });
+});
+
+// التعامل مع زر الإضافة (delvary_btn)
+document.querySelectorAll('.delvary_btn_container button').forEach((button) => {
+    button.addEventListener('click', function () {
+        // الوصول إلى العناصر داخل البطاقة
+        const card = button.closest('.card');
+        const productName = card.querySelector('#product_name').textContent;
+        const specialPrice = card.querySelector('#special_price').value;
+        const quantity = card.querySelector('#quantity').textContent;
+
+        // إضافة البيانات إلى LocalStorage
+        const newPro = {
+            product_name: productName,
+            special_price: specialPrice,
+            quantity: quantity,
+        };
+
+        let dataPro = localStorage.product ? JSON.parse(localStorage.product) : [];
+        dataPro.push(newPro);
+        localStorage.setItem('product', JSON.stringify(dataPro));
+
+        // تحديث الجدول
+        showData();
+    });
+});
+
+// عرض البيانات في الجدول
 function showData() {
-    var table = "";
-    for (let i = 0; i < dataPro.length; i++) {
+    const dataPro = localStorage.product ? JSON.parse(localStorage.product) : [];
+    let table = "";
+    dataPro.forEach((item, i) => {
         table += `
         <tr>
-            <td>${i}</td>
-            <td>${dataPro[i].product_name}</td>
-            <td>${dataPro[i].special_price}</td>
-            <td>${dataPro[i].quantity}</td>
+            <td>${i + 1}</td>
+            <td>${item.product_name}</td>
+            <td>شيكل ${item.special_price}</td>
+            <td>${item.quantity}</td>
             <td><button onClick="deleteData(${i})" id="delete">Delete</button></td>
-        </tr>
-        `
-    };
+        </tr>`;
+    });
     document.getElementById("tbody").innerHTML = table;
-};
-showData()
+}
 
-
-// delete product
-
-function deleteData(i){
-    dataPro.splice(i,1);
+// حذف بيانات من الجدول
+function deleteData(i) {
+    let dataPro = JSON.parse(localStorage.product);
+    dataPro.splice(i, 1);
     localStorage.product = JSON.stringify(dataPro);
-    showData()
-};
+    showData();
+}
+
+// عرض البيانات عند تحميل الصفحة
+showData();
