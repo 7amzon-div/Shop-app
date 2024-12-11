@@ -145,19 +145,31 @@ document.querySelectorAll('.delvary_btn_container button').forEach((button) => {
         const productName = card.querySelector('#product_name').textContent;
         const specialPrice = card.querySelector('#special_price').value;
         const quantity = card.querySelector('#quantity').textContent;
-        const total = specialPrice * quantity;
+        let total = specialPrice * quantity;
 
-
-        // إضافة البيانات إلى LocalStorage
-        const newPro = {
-            product_name: productName,
-            special_price: specialPrice,
-            quantity: quantity,
-            total: total,
-        };
-
+        // جلب البيانات المخزنة
         let dataPro = localStorage.product ? JSON.parse(localStorage.product) : [];
-        dataPro.push(newPro);
+
+        // البحث عن المنتج في LocalStorage
+        const existingIndex = dataPro.findIndex((item) => item.product_name === productName);
+
+        if (existingIndex !== -1) {
+            // تحديث بيانات المنتج الموجود
+            dataPro[existingIndex].special_price = specialPrice;
+            dataPro[existingIndex].quantity = quantity;
+            dataPro[existingIndex].total = total;
+        } else {
+            // إضافة المنتج الجديد
+            const newPro = {
+                product_name: productName,
+                special_price: specialPrice,
+                quantity: quantity,
+                total: total,
+            };
+            dataPro.push(newPro);
+        }
+
+        // حفظ البيانات في LocalStorage
         localStorage.setItem('product', JSON.stringify(dataPro));
 
         // تحديث الجدول
@@ -174,7 +186,7 @@ function showData() {
         <tr>
             <td>${i + 1}</td>
             <td>${item.product_name}</td>
-            <td>شيكل ${item.special_price}</td>
+            <td>${item.special_price}</td>
             <td>${item.quantity}</td>
             <td>${item.total}</td>
             <td><button onClick="deleteData(${i})" id="delete">Delete</button></td>
@@ -193,3 +205,4 @@ function deleteData(i) {
 
 // عرض البيانات عند تحميل الصفحة
 showData();
+
