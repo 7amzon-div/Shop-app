@@ -113,38 +113,64 @@
 //     localStorage.product = JSON.stringify(dataPro);
 //     showData()
 // };
+// بيانات المنتجات
+const products = [
+    { image: "dishwashing_liquid_image.jpeg", name: "فيري", price: 20 },
+    { image: "nescafe.webp", name: "نسكفيه", price: 2 },
+    // يمكن إضافة منتجات أخرى هنا
+];
+
+// إنشاء الكروت ديناميكياً
+function renderCards() {
+    const cardContainer = document.getElementById("cardContainer");
+    cardContainer.innerHTML = ""; // تفريغ المحتوى السابق
+    products.forEach((product) => {
+        const cardHTML = `
+        <div class="card">
+            <div class="container">
+                <img src="${product.image}" alt="">
+                <div class="order_btn">
+                    <p type="text" id="product_name">${product.name}</p>
+                    <input type="number" id="special_price" value="${product.price}">
+                    <p id="quantity">0</p>
+                </div>
+            </div>
+            <div class="quantity_container">
+                <button onclick="increase_quantity(this)" id="increase">+</button>
+                <hr>
+                <button onclick="decrease_quantity(this)" id="decrease">-</button>
+            </div>
+            <div class="delvary_btn_container">
+                <button id="delvary_btn"><i class="fa-solid fa-share-from-square"></i></button>
+            </div>
+        </div>`;
+        cardContainer.insertAdjacentHTML("beforeend", cardHTML);
+    });
+}
 
 // التعامل مع أزرار + و -
-document.querySelectorAll('.quantity_container button').forEach((button) => {
-    button.addEventListener('click', function () {
-        // تحديد نوع الزر (+ أو -)
-        const isIncrease = button.id === 'increase';
-        const card = button.closest('.card');
+function increase_quantity(button) {
+    const card = button.closest(".card");
+    const quantityElement = card.querySelector("#quantity");
+    let currentQuantity = parseInt(quantityElement.textContent);
+    quantityElement.textContent = currentQuantity + 1;
+}
 
-        // الوصول إلى الكمية الحالية
-        const quantityElement = card.querySelector('#quantity');
-        let currentQuantity = parseInt(quantityElement.textContent);
-
-        // تعديل الكمية بناءً على نوع الزر
-        if (isIncrease) {
-            currentQuantity += 1;
-        } else if (currentQuantity > 0) {
-            currentQuantity -= 1;
-        }
-
-        // تحديث الكمية في البطاقة
-        quantityElement.textContent = currentQuantity;
-    });
-});
+function decrease_quantity(button) {
+    const card = button.closest(".card");
+    const quantityElement = card.querySelector("#quantity");
+    let currentQuantity = parseInt(quantityElement.textContent);
+    if (currentQuantity > 0) quantityElement.textContent = currentQuantity - 1;
+}
 
 // التعامل مع زر الإضافة (delvary_btn)
-document.querySelectorAll('.delvary_btn_container button').forEach((button) => {
-    button.addEventListener('click', function () {
-        // الوصول إلى العناصر داخل البطاقة
-        const card = button.closest('.card');
-        const productName = card.querySelector('#product_name').textContent;
-        const specialPrice = card.querySelector('#special_price').value;
-        const quantity = card.querySelector('#quantity').textContent;
+document.addEventListener("click", (event) => {
+    if (event.target.closest("#delvary_btn")) {
+        const button = event.target.closest("#delvary_btn");
+        const card = button.closest(".card");
+        const productName = card.querySelector("#product_name").textContent;
+        const specialPrice = card.querySelector("#special_price").value;
+        const quantity = card.querySelector("#quantity").textContent;
 
         // إضافة البيانات إلى LocalStorage
         const newPro = {
@@ -155,11 +181,11 @@ document.querySelectorAll('.delvary_btn_container button').forEach((button) => {
 
         let dataPro = localStorage.product ? JSON.parse(localStorage.product) : [];
         dataPro.push(newPro);
-        localStorage.setItem('product', JSON.stringify(dataPro));
+        localStorage.setItem("product", JSON.stringify(dataPro));
 
         // تحديث الجدول
         showData();
-    });
+    }
 });
 
 // عرض البيانات في الجدول
@@ -188,4 +214,7 @@ function deleteData(i) {
 }
 
 // عرض البيانات عند تحميل الصفحة
-showData();
+document.addEventListener("DOMContentLoaded", () => {
+    renderCards();
+    showData();
+});
