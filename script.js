@@ -1,4 +1,36 @@
+
+function createCard(productImage, productName, price, id) {
+    const mainContainer = document.querySelector("main");
+    const cardHTML = `
+        <div class="card" id="card_${id}">
+            <div class="container">
+                <img src="${productImage}" alt="">
+                <div class="order_btn">
+                    <p type="text" id="product_name">${productName}</p>
+                    <input type="number" id="special_price" class="special_price" value="${price}">
+                    <p id="quantity">1</p>
+                </div>
+            </div>
+            <div class="quantity_container">
+                <button id="increase">+</button>
+                <hr>
+                <button id="decrease">-</button>
+            </div>
+            <div class="delvary_btn_container">
+                <button id="delvary_btn"><i class="fa-solid fa-share-from-square"></i></button>
+            </div>
+        </div>`;
+    mainContainer.insertAdjacentHTML("beforeend", cardHTML);
+}
+
+// Example usage:
+createCard("/product_image/dishwashing_liquid_image.jpeg", "فيري", 20, 1);
+createCard("/product_image/nescafe.webp", "نسكفيه", 2, 2);
+createCard("/product_image/head&sholders.webp", "شامبو", 23, 3);
+
 // التعامل مع أزرار + و -
+
+
 document.querySelectorAll('.quantity_container button').forEach((button) => {
     button.addEventListener('click', function () {
         // تحديد نوع الزر (+ أو -)
@@ -75,7 +107,7 @@ document.querySelectorAll('.delvary_btn_container button').forEach((button) => {
 });
 
 document.querySelectorAll('.special_price').forEach((number) => {
-    number.addEventListener('blur', function () {
+    number.addEventListener('change', function () {
    const card = this.closest('.card')
     apply_changes_to_table(card)
         // الوصول إلى العناصر داخل البطاقة
