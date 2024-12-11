@@ -12,24 +12,26 @@ document.querySelectorAll('.quantity_container button').forEach((button) => {
         // تعديل الكمية بناءً على نوع الزر
         if (isIncrease) {
             currentQuantity += 1;
-            apply_changes_to_table(card,button,currentQuantity)
+       
+        // تحديث الكمية في البطاقة
+        quantityElement.textContent = currentQuantity;     apply_changes_to_table(card,currentQuantity)
         } else if (currentQuantity > 0) {
             currentQuantity -= 1;
-            apply_changes_to_table(card,button,currentQuantity)
+      
+        // تحديث الكمية في البطاقة
+        quantityElement.textContent = currentQuantity;      apply_changes_to_table(card,currentQuantity)
         }
 
-        // تحديث الكمية في البطاقة
-        quantityElement.textContent = currentQuantity;
     });
 });
 
-function apply_changes_to_table(card,button,quan){
+function apply_changes_to_table(card){
     
     
         const productName = card.querySelector('#product_name').textContent;
         const specialPrice = card.querySelector('#special_price').value;
-        //const quantity = card.querySelector('#quantity').textContent;
-        const quantity =quan
+        const quantity = card.querySelector('#quantity').textContent;
+        
         
         let total = specialPrice * quantity;
 
@@ -72,6 +74,26 @@ document.querySelectorAll('.delvary_btn_container button').forEach((button) => {
     });
 });
 
+document.querySelectorAll('.special_price').forEach((number) => {
+    number.addEventListener('blur', function () {
+   const card = this.closest('.card')
+    apply_changes_to_table(card)
+        // الوصول إلى العناصر داخل البطاقة
+        console.log("iam blurred "+number.value)
+    });
+});
+
+
+document.querySelectorAll('.card').forEach((card) => {
+    card.addEventListener('click', function () {
+   
+    apply_changes_to_table(card)
+    
+        console.log("added to table")
+    });
+});
+
+
 // عرض البيانات في الجدول
 function showData() {
     const dataPro = localStorage.product ? JSON.parse(localStorage.product) : [];
@@ -100,7 +122,6 @@ function deleteData(i) {
 
 // عرض البيانات عند تحميل الصفحة
 showData();
-
 
 
   
