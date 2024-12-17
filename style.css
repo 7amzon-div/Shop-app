@@ -94,11 +94,27 @@ hr{
 
 .delvary_btn_container{
     display: flex;
+
     justify-content: center;
     background-color: rgb(24, 22, 22);
     border-radius: 15px;
     height: 100%;
+    
 }
+
+#coustmer{
+  /* color:rgb */
+  background-color: rgba(1, 255, 98, 0.199);
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+
+#coustmer::placeholder {
+    color: #999; /* Lighter gray for placeholder text */
+}
+
 
 #delvary_btn{
     padding: 6px;
@@ -110,9 +126,14 @@ hr{
     border: 2px solid rgb(1, 255, 98);
     transition: 1s ease;
     width: fit-content;
-    border-radius: 0px 5px 5px 0px;
-    border-left:none;
+    border-radius: 5px 5px 5px 0px;
+    /* border-left:none; */
     height: 100%;
+
+    display: flex;
+
+   /* margin: 0 auto; */
+   
 }
 
 #delvary_btn:hover{
