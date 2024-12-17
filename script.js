@@ -1,192 +1,113 @@
 
-// let product_name = document.getElementById("product_name");
-
-// let special_price = document.getElementById("special_price");
-
-// let quantity = document.getElementById("quantity");
-
-// let table_quantity = document.getElementById("table_quantity");
-
-// let increase = document.querySelector("#increase"); // +
-
-// let decrease = document.querySelector("#decrease"); // -
-
-// let delvary_btn = document.querySelector("#delvary_btn");
-
-// let Delete = document.querySelector("#delete");
-
-
-// function return_quan(){
-
-// return qun_number = parseInt(quantity.textContent);
-
-// }
-
-
-// // console.log(special_price.textContent * return_quan());
-// function increase_quantity(){
-
-//     let current_quan = return_quan();
-
-//     current_quan += 1;
-
-//     quantity.textContent = current_quan;
-
-//     table_quantity.textContent = quantity.textContent;
-
-//     total_price.textContent = Number(special_price.value) * Number(return_quan());
-// }
-
-// function decrease_quantity(){
-
-//     let current_quan = return_quan();
-
-//     if(current_quan != 0){
-        
-//         current_quan -= 1;
-//     };
-
-
-//     quantity.textContent = current_quan;
-
-//     table_quantity.textContent = quantity.textContent;
-
-//     total_price.textContent = Number(special_price.value) * Number(return_quan());
-// }
-
-
-
-
-
-
-
-// // create product
-
-// let dataPro;
-
-// if (localStorage.product != null) {
-//     dataPro = JSON.parse(localStorage.product);
-// }else {
-//     dataPro = [];
-// };
-
-// delvary_btn.onclick = function (g) {
-    
-//     var newPro = {
-//         product_name: product_name.innerHTML,
-//         special_price: special_price.value,
-//         quantity: quantity.innerHTML,
-//     };
-
-//     dataPro.push(newPro);
-//     localStorage.setItem('product', JSON.stringify(dataPro));
-
-//     showData()
-// };
-
-
-
-// // read
-
-// function showData() {
-//     var table = "";
-//     for (let i = 0; i < dataPro.length; i++) {
-//         table += `
-//         <tr>
-//             <td>${i}</td>
-//             <td>${dataPro[i].product_name}</td>
-//             <td>${dataPro[i].special_price}</td>
-//             <td>${dataPro[i].quantity}</td>
-//             <td><button onClick="deleteData(${i})" id="delete">Delete</button></td>
-//         </tr>
-//         `
-//     };
-//     document.getElementById("tbody").innerHTML = table;
-// };
-// showData()
-
-
-// // delete product
-
-// function deleteData(i){
-//     dataPro.splice(i,1);
-//     localStorage.product = JSON.stringify(dataPro);
-//     showData()
-// };
-// بيانات المنتجات
-const products = [
-    { image: "dishwashing_liquid_image.jpeg", name: "فيري", price: 20 },
-    { image: "nescafe.webp", name: "نسكفيه", price: 2 },
-    // يمكن إضافة منتجات أخرى هنا
-];
-
-// إنشاء الكروت ديناميكياً
-function renderCards() {
-    const cardContainer = document.getElementById("cardContainer");
-    cardContainer.innerHTML = ""; // تفريغ المحتوى السابق
-    products.forEach((product) => {
-        const cardHTML = `
-        <div class="card">
+function createCard(productImage, productName, price, id) {
+    const mainContainer = document.querySelector("main");
+    const cardHTML = `
+        <div class="card" id="card_${id}">
             <div class="container">
-                <img src="${product.image}" alt="">
+                <img src="${productImage}" alt="">
                 <div class="order_btn">
-                    <p type="text" id="product_name">${product.name}</p>
-                    <input type="number" id="special_price" value="${product.price}">
-                    <p id="quantity">0</p>
+                    <p type="text" id="product_name">${productName}</p>
+                    <input type="number" id="special_price" class="special_price" value="${price}">
+                    <p id="quantity">1</p>
                 </div>
             </div>
             <div class="quantity_container">
-                <button onclick="increase_quantity(this)" id="increase">+</button>
+                <button id="increase">+</button>
                 <hr>
-                <button onclick="decrease_quantity(this)" id="decrease">-</button>
+                <button id="decrease">-</button>
             </div>
             <div class="delvary_btn_container">
                 <button id="delvary_btn"><i class="fa-solid fa-share-from-square"></i></button>
             </div>
         </div>`;
-        cardContainer.insertAdjacentHTML("beforeend", cardHTML);
-    });
+    mainContainer.insertAdjacentHTML("beforeend", cardHTML);
 }
+
+// Example usage:
+createCard("/product_image/dishwashing_liquid_image.jpeg", "فيري", 20, 1);
+createCard("/product_image/nescafe.webp", "نسكفيه", 2, 2);
+createCard("/product_image/head&sholders.webp", "شامبو", 23, 3);
 
 // التعامل مع أزرار + و -
-function increase_quantity(button) {
-    const card = button.closest(".card");
-    const quantityElement = card.querySelector("#quantity");
-    let currentQuantity = parseInt(quantityElement.textContent);
-    quantityElement.textContent = currentQuantity + 1;
-}
 
-function decrease_quantity(button) {
-    const card = button.closest(".card");
-    const quantityElement = card.querySelector("#quantity");
-    let currentQuantity = parseInt(quantityElement.textContent);
-    if (currentQuantity > 0) quantityElement.textContent = currentQuantity - 1;
-}
 
-// التعامل مع زر الإضافة (delvary_btn)
-document.addEventListener("click", (event) => {
-    if (event.target.closest("#delvary_btn")) {
-        const button = event.target.closest("#delvary_btn");
-        const card = button.closest(".card");
-        const productName = card.querySelector("#product_name").textContent;
-        const specialPrice = card.querySelector("#special_price").value;
-        const quantity = card.querySelector("#quantity").textContent;
+document.querySelectorAll('.quantity_container button').forEach((button) => {
+    button.addEventListener('click', function () {
+        // تحديد نوع الزر (+ أو -)
+        const isIncrease = button.id === 'increase';
+        const card = button.closest('.card');
 
-        // إضافة البيانات إلى LocalStorage
-        const newPro = {
-            product_name: productName,
-            special_price: specialPrice,
-            quantity: quantity,
-        };
+        // الوصول إلى الكمية الحالية
+        const quantityElement = card.querySelector('#quantity');
+        let currentQuantity = parseInt(quantityElement.textContent);
 
+        // تعديل الكمية بناءً على نوع الزر
+        if (isIncrease) {
+            currentQuantity += 1;
+       
+        // تحديث الكمية في البطاقة
+        quantityElement.textContent = currentQuantity;     apply_changes_to_table(card,currentQuantity)
+        } else if (currentQuantity > 0) {
+            currentQuantity -= 1;
+      
+        // تحديث الكمية في البطاقة
+        quantityElement.textContent = currentQuantity;      apply_changes_to_table(card,currentQuantity)
+        }
+
+    });
+});
+
+function apply_changes_to_table(card){
+    
+    
+        const productName = card.querySelector('#product_name').textContent;
+        const specialPrice = card.querySelector('#special_price').value;
+        const quantity = card.querySelector('#quantity').textContent;
+        
+        
+        let total = specialPrice * quantity;
+
+        // جلب البيانات المخزنة
         let dataPro = localStorage.product ? JSON.parse(localStorage.product) : [];
-        dataPro.push(newPro);
-        localStorage.setItem("product", JSON.stringify(dataPro));
+
+        // البحث عن المنتج في LocalStorage
+        const existingIndex = dataPro.findIndex((item) => item.product_name === productName);
+
+        if (existingIndex !== -1) {
+            // تحديث بيانات المنتج الموجود
+            dataPro[existingIndex].special_price = specialPrice;
+            dataPro[existingIndex].quantity = quantity;
+            dataPro[existingIndex].total = total;
+        } else {
+            // إضافة المنتج الجديد
+            const newPro = {
+                product_name: productName,
+                special_price: specialPrice,
+                quantity: quantity,
+                total: total,
+            };
+            dataPro.push(newPro);
+        }
+
+        // حفظ البيانات في LocalStorage
+        localStorage.setItem('product', JSON.stringify(dataPro));
 
         // تحديث الجدول
         showData();
-    }
+    
+}
+
+
+
+document.querySelectorAll('.card').forEach((card) => {
+    card.addEventListener('click', function () {
+   
+    apply_changes_to_table(card)
+    
+        console.log("added to table")
+    });
 });
+
 
 // عرض البيانات في الجدول
 function showData() {
@@ -197,8 +118,9 @@ function showData() {
         <tr>
             <td>${i + 1}</td>
             <td>${item.product_name}</td>
-            <td>شيكل ${item.special_price}</td>
+            <td>${item.special_price}</td>
             <td>${item.quantity}</td>
+            <td>${item.total}</td>
             <td><button onClick="deleteData(${i})" id="delete">Delete</button></td>
         </tr>`;
     });
@@ -213,8 +135,4 @@ function deleteData(i) {
     showData();
 }
 
-// عرض البيانات عند تحميل الصفحة
-document.addEventListener("DOMContentLoaded", () => {
-    renderCards();
-    showData();
-});
+
