@@ -11,29 +11,47 @@
 }
 
 header{
-    background: url("/product_image/nav_bar_2.webp");
+    /* background: url("/product_image/nav_bar_2.webp"); */
     background-position:top;
     background-size:cover;
     background-repeat:no-repeat ;
     background-color: rgb(29, 27, 27);
-    color: white;
+   
     display: flex;
     color: rgb(1, 255, 56);
-    justify-content: end;
+    justify-content: flex-start;
     align-items: center;
     padding: 20px;
     border-bottom: 2px solid rgb(0, 255, 157);
     height: 100px;
 }
 
+header button{
+    /* background: url("/product_image/nav_bar_2.webp"); */
+    
+    /* background-size:cover; */
+ 
+    background-color: rgb(29, 27, 27);
+   
+    display: flex;
+    color: rgb(1, 255, 56);
+   
+    padding: 20px;
+    border-bottom: 2px solid rgb(0, 255, 157);
+   
+    
+}
+
+
 
 main{
-    background: url("/product_image/back_ground.jpg");
+    background: url("/product_image/Supermarket.jpg");
     background-position:top;
     background-size:cover;
     background-repeat:no-repeat ;
     padding: 20px 0px;
-    background-color: rgb(24, 22, 22);
+    /* background-color: rgb(24, 22, 22); */
+    background-color: rgb(59, 70, 59);
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -119,7 +137,9 @@ hr{
     text-align: center;
     min-width: 30px;
     max-width:150px;
-    display: none;
+    
+    display: block;
+
     border: 1px solid black;
 }
 

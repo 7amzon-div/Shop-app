@@ -1,13 +1,13 @@
 
-function createCard(productImage, productName, price, id) {
+function createCard(product) {
     const mainContainer = document.querySelector("main");
     const cardHTML = `
-        <div class="card" id="card_${id}">
+        <div class="card" id="card_${product.id}">
             <div class="container">
-                <img src="${productImage}" alt="">
+                <img src="${product.image}" alt="">
                 <div class="order_btn">
-                    <p type="text" id="product_name">${productName}</p>
-                    <input type="number" id="special_price" class="special_price" value="${price}">
+                    <p type="text" id="product_name">${product.name}</p>
+                    <input type="number" id="special_price" class="special_price" value="${product.price}">
                     <p id="quantity">1</p>
                 </div>
             </div>
@@ -15,18 +15,33 @@ function createCard(productImage, productName, price, id) {
                 <button id="increase">+</button>
                 <hr>
                 <button id="decrease">-</button>
-            </div>
-            <div class="delvary_btn_container">
-                <button id="delvary_btn"><i class="fa-solid fa-share-from-square"></i></button>
-            </div>
+           
         </div>`;
     mainContainer.insertAdjacentHTML("beforeend", cardHTML);
 }
 
+// </div>
+// <div class="delvary_btn_container">
+//      <button id="delvary_btn"><i class="fa-solid fa-share-from-square"></i></button>
+//  </div>
 // Example usage:
-createCard("/product_image/dishwashing_liquid_image.jpeg", "فيري", 20, 1);
-createCard("/product_image/nescafe.webp", "نسكفيه", 2, 2);
-createCard("/product_image/head&sholders.webp", "شامبو", 23, 3);
+class Product {
+    constructor(image, name, id, price) {
+        this.image = image;
+        this.name = name;
+        this.id = id;
+        this.price = price;
+    }
+}
+
+const items = [
+    new Product("/product_image/dishwashing_liquid_image.jpeg", "فيري", 1, 20),
+    new Product("/product_image/nescafe.webp", "نسكفيه", 2, 25),
+    new Product("/product_image/head&sholders.webp", "هيد اند شولدر", 3, 23)
+];
+createCard(items[0])
+createCard(items[1])
+createCard(items[2])
 
 // التعامل مع أزرار + و -
 
@@ -136,3 +151,4 @@ function deleteData(i) {
 }
 
 
+showData();
