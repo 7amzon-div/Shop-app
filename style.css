@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Cairo:wght@200..1000&family=Galindo&family=Jersey+20&display=swap');
 
 
@@ -42,7 +41,9 @@ header button{
     
 }
 
-
+#receipt_table{
+    display:none;
+}
 
 main{
     background: url("/product_image/Supermarket.jpg");
@@ -96,41 +97,50 @@ hr{
     display: flex;
 
     justify-content: center;
+    
     background-color: rgb(24, 22, 22);
-    border-radius: 15px;
+ 
     height: 100%;
     
+     font-size: 1.3em;
+    font-weight: 400;
+    
+    margin-top:10px;
+    margin-bottom:10px;
 }
 
-#coustmer{
-  /* color:rgb */
-  background-color: rgba(1, 255, 98, 0.199);
-  color: white;
-  font-size: 18px;
-  text-align: center;
-}
-
-
-#coustmer::placeholder {
-    color: #999; /* Lighter gray for placeholder text */
-}
-
-
-#delvary_btn{
-    padding: 6px;
-    font-size: 1.3em;
-    font-weight: 700;
-    background-color: rgb(27, 26, 26);
+.delvary_btn_container button{
+    height: 100%;
+    width:20%;
+    border-radius:20px;
+    
+    display: flex;
+     background-color: rgb(27, 26, 26);
     color: white;
     cursor: pointer;
     border: 2px solid rgb(1, 255, 98);
-    transition: 1s ease;
     width: fit-content;
+    
+    padding: 6px;
+    
     border-radius: 5px 5px 5px 0px;
-    /* border-left:none; */
-    height: 100%;
+}
 
-    display: flex;
+#switch_btn{
+  display:inline_block;
+    margin-left:0px;
+    margin-right:10px;
+}
+
+#delvary_btn{
+    
+   
+   
+    transition: 1s ease;
+    
+    
+    /* border-left:none; */
+    
 
    /* margin: 0 auto; */
    
@@ -144,6 +154,25 @@ hr{
 #delvary_btn i{
     background-color: transparent;
 }
+
+
+#coustmer{
+  /* color:rgb */
+  background-color: rgba(1, 255, 98, 0.199);
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  width:40%;
+  
+  border-radius:30px;
+}
+
+
+#coustmer::placeholder {
+    color: #999; /* Lighter gray for placeholder text */
+}
+
+
 
 .container #product_name{
     position: absolute;
@@ -196,6 +225,8 @@ hr{
     border-left: none;
     overflow: hidden;
     height: 100%;
+    
+    
 }
 
 .quantity_container button{
@@ -237,6 +268,8 @@ th,td{
 #tbody{
     background-color: rgb(29, 25, 25);
 }
+
+
 
 #delete{
     padding: 5px;

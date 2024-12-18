@@ -1,4 +1,18 @@
 
+let switch_btn=document.getElementById("switch_btn");
+
+let delvary_btn =document.getElementById("delvary_btn")
+
+let coustmer=document.getElementById("coustmer")
+
+let order_table=document.getElementById("order_table");
+let receipt_table=document.getElementById("receipt_table");
+
+// array
+
+let switch_btn_arr=[switch_btn.textContent,"طلب جديد"];
+
+
 function createCard(product) {
     const mainContainer = document.querySelector("main");
     const cardHTML = `
@@ -20,11 +34,7 @@ function createCard(product) {
     mainContainer.insertAdjacentHTML("beforeend", cardHTML);
 }
 
-// </div>
-// <div class="delvary_btn_container">
-//      <button id="delvary_btn"><i class="fa-solid fa-share-from-square"></i></button>
-//  </div>
-// Example usage:
+
 class Product {
     constructor(image, name, id, price) {
         this.image = image;
@@ -34,18 +44,98 @@ class Product {
     }
 }
 
+class Receipt{
+    constructor(id,coustmer, cashier, date,product=[],total) {
+        this.id= id;
+        this.coustmer = coustmer;
+        this.cashier = cashier;
+        this.date = date;
+      
+        this.product=product
+        this.total=total;
+    }
+
+    add_product(pro){
+        this.product.push(pro)
+    }
+    
+}
+
 const items = [
     new Product("/product_image/dishwashing_liquid_image.jpeg", "فيري", 1, 20),
     new Product("/product_image/nescafe.webp", "نسكفيه", 2, 25),
     new Product("/product_image/head&sholders.webp", "هيد اند شولدر", 3, 23)
 ];
-createCard(items[0])
-createCard(items[1])
-createCard(items[2])
+
+
+function init_cards(item){
+
+for(let i=0;i<item.length;i++){
+    createCard(item[i])
+    }
+
+}
+
+receipt =[];
+let r_count=0;
+
+function create_receipt(pro){
+   
+
+
+    receipt.push();
+}
+
+init_cards(items);
+
+
+
+function add_new_receipt(){
+    
+    // id,coustmer, cashier, date,_clock,product=[],total
+   
+    
+    let total ;
+    const cashier = "ahmed"; // Or get cashier name dynamically
+    const date = new Date(); // Or get date from user input if needed
+  
+    // جلب البيانات المخزنة
+    let receipt = localStorage.product ? JSON.parse(localStorage.product) : [];
+
+    let dataPro = localStorage.product ? JSON.parse(localStorage.product) : [];
+
+  for(pro of dataPro){
+   total+= pro.total;
+  }
+
+        // إضافة المنتج الجديد
+        const new_receipt = {
+            id:r_count,
+            cashier:cashier,
+            date: date,
+           product: dataPro,
+            total:total
+            
+        };
+        receipt.push(new_receipt);
+   
+
+    // حفظ البيانات في LocalStorage
+    localStorage.setItem('receipt', JSON.stringify(receipt));
+
+    r_count+=1;
+}
+
+
+
+delvary_btn.addEventListener("click",
+    function(){
+add_new_receipt();
+
+    }
+);
 
 // التعامل مع أزرار + و -
-
-
 document.querySelectorAll('.quantity_container button').forEach((button) => {
     button.addEventListener('click', function () {
         // تحديد نوع الزر (+ أو -)
@@ -124,6 +214,32 @@ document.querySelectorAll('.card').forEach((card) => {
 });
 
 
+
+document.getElementById("switch_btn").addEventListener("click",function(){
+    let btn=this.textContent;
+  
+    if(btn===switch_btn_arr[0]){
+        btn=switch_btn_arr[1]
+        order_table.style.display="none"
+        receipt_table.style.display="flex"        
+    }else{
+        btn=switch_btn_arr[0]
+        order_table.style.display="flex"
+        receipt_table.style.display="none"
+    }
+   
+    
+    switch_btn.textContent=btn;
+});
+  
+  
+// Receipt 
+  
+// delvary_btn.addEventListener("click",function(){
+//  Receip   
+// }) ;
+  
+  
 // عرض البيانات في الجدول
 function showData() {
     const dataPro = localStorage.product ? JSON.parse(localStorage.product) : [];
