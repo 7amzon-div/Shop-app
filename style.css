@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Cairo:wght@200..1000&family=Galindo&family=Jersey+20&display=swap');
 
-
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -9,283 +8,232 @@
     background-color: rgb(36, 34, 34);
 }
 
-header{
-    /* background: url("/product_image/nav_bar_2.webp"); */
-    background-position:top;
-    background-size:cover;
-    background-repeat:no-repeat ;
-    background-color: rgb(29, 27, 27);
-   
+/* Shared styles */
+.flex-center {
     display: flex;
-    color: rgb(1, 255, 56);
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    display: flex;
+    cursor: pointer;
+    border: none;
+    background-color: rgb(29, 27, 27);
+    color: white;
+}
+
+header {
+    background-color: rgb(29, 27, 27);
+    color: rgb(1, 255, 56);
     padding: 20px;
     border-bottom: 2px solid rgb(0, 255, 157);
     height: 100px;
+    display: flex;
+    align-items: center;
 }
 
-header button{
-    /* background: url("/product_image/nav_bar_2.webp"); */
-    
-    /* background-size:cover; */
- 
-    background-color: rgb(29, 27, 27);
-   
-    display: flex;
+header button {
     color: rgb(1, 255, 56);
-   
     padding: 20px;
     border-bottom: 2px solid rgb(0, 255, 157);
-   
-    
 }
 
-#receipt_table{
-    display:none;
+#receipt_table {
+    display: none;
 }
 
-main{
-    background: url("/product_image/Supermarket.jpg");
-    background-position:top;
-    background-size:cover;
-    background-repeat:no-repeat ;
-    padding: 20px 0px;
-    /* background-color: rgb(24, 22, 22); */
-    background-color: rgb(59, 70, 59);
+main {
+    background: url("/product_image/Supermarket.jpg") top / cover no-repeat, rgb(59, 70, 59);
+    padding: 20px 0;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
 }
 
-.card{
+.card {
     display: flex;
     justify-content: center;
     border-radius: 15px;
     height: 250px;
 }
 
-.container{
-    display: flex;
-    flex-direction: column;
+.container {
     width: 250px;
-    border-radius: 5px 0px 0px 10px;
+    height: 100%;
+    border-radius: 5px 0 0 10px;
     border: 2px solid rgb(0, 255, 157);
     border-right: none;
     position: relative;
-    height: 100%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
-.container img{
+
+.container img {
     width: 100%;
-    height:80%;
+    height: 80%;
     background-color: chartreuse;
     z-index: 0;
 }
 
-.order_btn{
-    display: flex;
+.order_btn {
     height: 100%;
+    display: flex;
 }
 
-hr{
+hr {
     border: 1px solid rgb(3, 255, 137);
 }
 
-.delvary_btn_container{
-    display: flex;
-
-    justify-content: center;
-    
+.delvary_btn_container {
     background-color: rgb(24, 22, 22);
- 
-    height: 100%;
-    
-     font-size: 1.3em;
+    font-size: 1.3em;
     font-weight: 400;
-    
-    margin-top:10px;
-    margin-bottom:10px;
-}
-
-.delvary_btn_container button{
+    margin: 10px 0;
     height: 100%;
-    width:20%;
-    border-radius:20px;
-    
+    text-align: center;
     display: flex;
-     background-color: rgb(27, 26, 26);
-    color: white;
-    cursor: pointer;
-    border: 2px solid rgb(1, 255, 98);
+    justify-content: center;
+}
+
+.delvary_btn_container button {
     width: fit-content;
-    
     padding: 6px;
-    
-    border-radius: 5px 5px 5px 0px;
+    border: 2px solid rgb(1, 255, 98);
+    border-radius: 5px;
 }
 
-#switch_btn{
-  display:inline_block;
-    margin-left:0px;
-    margin-right:10px;
+#switch_btn {
+    display: inline-block;
+    margin: 0 10px 0 0;
 }
 
-#delvary_btn{
-    
-   
-   
+#delvary_btn {
     transition: 1s ease;
-    
-    
-    /* border-left:none; */
-    
-
-   /* margin: 0 auto; */
-   
 }
 
-#delvary_btn:hover{
+#delvary_btn:hover {
     background-color: rgb(0, 255, 136);
     color: black;
 }
 
-#delvary_btn i{
-    background-color: transparent;
+#coustmer {
+    background-color: rgba(1, 255, 98, 0.199);
+    color: white;
+    font-size: 18px;
+    text-align: center;
+    width: 40%;
+    border-radius: 30px;
 }
-
-
-#coustmer{
-  /* color:rgb */
-  background-color: rgba(1, 255, 98, 0.199);
-  color: white;
-  font-size: 18px;
-  text-align: center;
-  width:40%;
-  
-  border-radius:30px;
-}
-
 
 #coustmer::placeholder {
-    color: #999; /* Lighter gray for placeholder text */
+    color: #999;
 }
 
-
-
-.container #product_name{
+.container #product_name {
     position: absolute;
-    left: 0px;
+    left: 0;
     bottom: 46px;
     background-color: rgb(43, 38, 38);
     color: white;
     padding: 7px;
     font-size: 1.1em;
-    font-family:"Cairo" ;
-    border-radius: 0px 4px 4px 0px;
+    font-family: "Cairo";
+    border-radius: 0 4px 4px 0;
     text-align: center;
-    min-width: 30px;
-    max-width:150px;
-    
-    display: block;
-
+    max-width: 150px;
     border: 1px solid black;
 }
 
-#special_price{
+#special_price {
     background-color: rgb(43, 38, 38);
     color: white;
     font-size: 1.2em;
+    text-align: center;
     width: 100%;
     border: none;
-    text-align: center;
-    z-index: 2;
 }
 
-#quantity{
+#quantity {
+    position: absolute;
+    top: 0;
+    right: 0;
     height: 100%;
     padding: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
     background-color: rgb(0, 255, 157);
     font-size: 1.2em;
     font-weight: 700;
-    top: 0px;
-    right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     z-index: 2;
 }
 
-.quantity_container{
+.quantity_container {
     border: 2px solid rgb(0, 255, 157);
+    border-left: none;
+    height: 100%;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    border-left: none;
-    overflow: hidden;
-    height: 100%;
-    
-    
 }
 
-.quantity_container button{
+.quantity_container button {
     height: 50%;
     padding: 10px;
     background-color: black;
-    color: white;
-    border: none;
     font-size: 1.3em;
-    cursor: pointer;
 }
 
-table thead th{
+table {
+    width: 100%;
+    text-align: center;
+    background-color: rgb(31, 30, 30);
+    margin-bottom: 200px;
+    border: none;
+}
+
+table thead th {
     font-weight: 800;
     font-size: 1em;
     background-color: rgb(0, 253, 156);
     text-transform: uppercase;
 }
 
-table tbody td{
+table tbody td {
     font-size: 1.2em;
     font-weight: 500;
     color: white;
 }
 
-table{
-    width: 100%;
-    text-align: center;
-    background-color: rgb(31, 30, 30);
-    border: none;
-    height: fit-content;
-    margin-bottom: 200px;
-}
-
-th,td{
+th, td {
     padding: 5px;
 }
 
-#tbody{
+#tbody {
     background-color: rgb(29, 25, 25);
 }
 
-
-
-#delete{
+#delete {
     padding: 5px;
     border-radius: 4px;
     text-align: center;
     width: 100%;
-    border: none;
-    cursor: pointer;
-    font-family:"Galindo","Anton", sans-serif;
+    font-family: "Galindo", "Anton", sans-serif;
     font-weight: 400;
-    font-style: normal;
     font-size: 1em;
     color: black;
     letter-spacing: 0.5px;
     background-color: rgb(0, 253, 55);
 }
-#delete:hover{
+
+#delete:hover {
     background-color: rgb(255, 60, 0);
 }

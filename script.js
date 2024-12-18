@@ -131,7 +131,7 @@ function add_new_receipt(){
 delvary_btn.addEventListener("click",
     function(){
 add_new_receipt();
-
+console.log("ahmed receipt");
     }
 );
 
