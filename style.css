@@ -8,17 +8,7 @@
     background-color: rgb(36, 34, 34);
 }
 
-/* Shared styles */
-.flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.flex-column {
-    display: flex;
-    flex-direction: column;
-}
 
 button {
     display: flex;

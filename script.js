@@ -13,9 +13,9 @@ let receipt_table=document.getElementById("receipt_table");
 
 let switch_btn_arr=[switch_btn.textContent,"طلب جديد"];
 
-
+const mainContainer = document.querySelector("main");
 function createCard(product) {
-    const mainContainer = document.querySelector("main");
+   
     const cardHTML = `
         <div class="card" id="${product.id}">
             <div class="container">
@@ -35,6 +35,11 @@ function createCard(product) {
     mainContainer.insertAdjacentHTML("beforeend", cardHTML);
 }
 
+function clear_product(){
+    // Clean all dataPro
+    localStorage.setItem('product', JSON.stringify([]));
+  
+  }
 
 class Product {
     constructor(image, name, id, price) {
@@ -238,16 +243,21 @@ document.querySelectorAll('.card').forEach((card) => {
 
 function switch_to_product(){
     
-    order_table.style.display="none"
-        receipt_table.style.display="flex" 
-        showReceipt()
+    order_table.style.display="flex"
+    receipt_table.style.display="none"
+    switch_btn.textContent= btn=switch_btn_arr[0];
+        mainContainer.style="display:flex;"
+        showData()
+            
 }
 
 function switch_to_receipt(){
-
-         order_table.style.display="flex"
-        receipt_table.style.display="none"
+    order_table.style.display="none"
+    receipt_table.style.display="flex" 
+    switch_btn.textContent= btn=switch_btn_arr[1];
+    showReceipt()
         
+        mainContainer.style="display:none;"
 }
 
 switch_btn.addEventListener("click",function(){
@@ -255,29 +265,16 @@ switch_btn.addEventListener("click",function(){
   
 
     //جميع الفواتير
-    if(btn===switch_btn_arr[0]){
+    if(btn===switch_btn_arr[0]){switch_to_receipt()}
+    else{clear_product();switch_to_product()
+    }
        
 
-        btn=switch_btn_arr[1]
-        switch_to_product();
-    }else{//ارسال الفواتير
-       
-        btn=switch_btn_arr[0]
-        switch_to_receipt();
-        
-    }
-   
-    
-    switch_btn.textContent=btn;
+  
 });
   
   
-// Receipt 
-  
-// delvary_btn.addEventListener("click",function(){
-//  Receip   
-// }) ;
-  
+
   
 // عرض البيانات في الجدول
 function showData() {
@@ -301,6 +298,7 @@ function showData() {
 delvary_btn.addEventListener("click",
     function(){
 add_new_receipt();
+switch_to_receipt();
 console.log("receipt added");
     }
 );
@@ -358,9 +356,7 @@ function delete_receipt(i) {
 
 function edit_receipt(id_) {
 
-  // Clean all dataPro
-  localStorage.setItem('product', JSON.stringify([]));
-
+    clear_product();
   // Retrieve receipts from localStorage
   let receipt = localStorage.receipt ? JSON.parse(localStorage.receipt) : [];
 
@@ -384,12 +380,15 @@ function edit_receipt(id_) {
   // Update localStorage with the new dataPro
   localStorage.setItem('product', JSON.stringify(dataPro));
 
-  switch_to_receipt(); 
-  switch_btn.textContent=switch_btn_arr[0];
-
+  //move to product page
+  switch_to_product(); 
+ 
+//تحديث اسم المشتري على حسب الفاتورة
   coustmer.value=receipt_to_edit.coustmer;
-  // Show updated dataPro (assumes showData function is defined)
+  
   showData();
 }
+
+
 
 showData();
