@@ -260,13 +260,20 @@ function switch_to_receipt(){
         mainContainer.style="display:none;"
 }
 
+
+// event listner
 switch_btn.addEventListener("click",function(){
     let btn=this.textContent;
   
 
     //جميع الفواتير
-    if(btn===switch_btn_arr[0]){switch_to_receipt()}
-    else{clear_product();switch_to_product()
+    if(btn===switch_btn_arr[0]){
+        switch_to_receipt()}
+    else{
+    clear_product();
+
+    switch_to_product()
+    coustmer.value=""
     }
        
 
