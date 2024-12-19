@@ -91,7 +91,7 @@ init_cards(items);
 
 
 
-function add_new_receipt(){
+function add_new_receipt(id_){
     
     // id,coustmer, cashier, date,_clock,product=[],total
    
@@ -109,7 +109,22 @@ function add_new_receipt(){
    total+= parseFloat(pro.total);
   }
 
-        // إضافة المنتج الجديد
+
+  const existingIndex = receipt.findIndex((rec) => (rec.coustmer === coustmer.value));
+  console.log("existingIndex"+existingIndex)
+    
+  if (existingIndex !== -1) {
+      
+      console.log("existingIndex"+existingIndex)
+      receipt[existingIndex].date = date.toISOString();
+      receipt[existingIndex].product = dataPro;
+      
+      receipt[existingIndex].total=total
+      
+  }
+  else{
+
+        // إضافة فاتورة الجديد
         let new_receipt = {
             id:r_count,
             cashier:cashier,
@@ -124,7 +139,7 @@ function add_new_receipt(){
         console.log(total)
         receipt.push(new_receipt);
    
-
+    }
     // حفظ البيانات في LocalStorage
     localStorage.setItem('receipt', JSON.stringify(receipt));
 
@@ -221,20 +236,34 @@ document.querySelectorAll('.card').forEach((card) => {
 });
 
 
+function switch_to_product(){
+    
+    order_table.style.display="none"
+        receipt_table.style.display="flex" 
+        showReceipt()
+}
 
-document.getElementById("switch_btn").addEventListener("click",function(){
+function switch_to_receipt(){
+
+         order_table.style.display="flex"
+        receipt_table.style.display="none"
+        
+}
+
+switch_btn.addEventListener("click",function(){
     let btn=this.textContent;
   
+
+    //جميع الفواتير
     if(btn===switch_btn_arr[0]){
+       
+
         btn=switch_btn_arr[1]
-        order_table.style.display="none"
-        receipt_table.style.display="flex"   
-        
-        showReceipt()
-    }else{
+        switch_to_product();
+    }else{//ارسال الفواتير
+       
         btn=switch_btn_arr[0]
-        order_table.style.display="flex"
-        receipt_table.style.display="none"
+        switch_to_receipt();
         
     }
    
@@ -300,7 +329,9 @@ receiptData.forEach((receipt, i) => {
     // Close the list and the details section
     productsHTML += `</ul>
     </details><button id="delete_receipt"
-    class="delete_receipt" onClick="delete_receipt(${i})">Delete</button>`;
+    class="delete_receipt" onClick="delete_receipt(${i})">Delete</button> 
+    <button id="edit_receipt"
+    class="edit_receipt" onClick="edit_receipt(${i})">edit</button>`;
 });
 
 // Inject the generated HTML
@@ -309,57 +340,6 @@ document.getElementById("receiptTbody").innerHTML = productsHTML;
  
 
 
-
- /* 
- function showReceipt() {
-    // Retrieve receipts from local storage
-    const receiptData = localStorage.receipt ? JSON.parse(localStorage.receipt) : [];
-    let detailsHTML = "";
-
-    // Loop through each receipt
-    receiptData.forEach((receipt) => {
-        // Ensure `receipt.product` exists and is an array
-        let productsHTML = Array.isArray(receipt.product)
-            ? receipt.product.map(
-                (p, j) => `
-                
-                <tr>
-                    <td>${j + 1}</td>
-                    <td>${p.product_name}</td>
-                    <td>${p.special_price}</td>
-                    <td>${p.quantity}</td>
-                    <td>${p.total}</td>
-                </tr>
-                
-                `
-              ).join("")
-            : `<tr><td colspan="5">No products found</td></tr>`;
-
-        // Build the receipt section
-        detailsHTML += `
-        <details>
-          <summary>Receipt #${receipt.id} - Total: $${receipt.total}</summary>
-          <div class="details_content">
-            <p><strong>Customer:</strong> ${receipt.coustmer || "N/A"}</p>
-            <p><strong>Cashier:</strong> ${receipt.cashier}</p>
-            <p><strong>Date:</strong> ${new Date(receipt.date).toLocaleString()}</p>
- 
-   <tr>
-          
-            <td>
-                <ul>${productsHTML}</ul>
-            </td>
-            <td>${receipt.total}</td>
-            <td><button id="delete_receipt"onClick="deleteReceipt(${receipt.id})" >Delete</button></td>
-        </tr>
-        
-        </details>`;
-    }); 
-
-    // Inject the generated content into the `receiptTbody` or a container
-    document.getElementById("receiptTbody").innerHTML = detailsHTML;
-}
-    */
 // حذف بيانات من الجدول
 function deleteData(i) {
     let dataPro = JSON.parse(localStorage.product);
@@ -376,11 +356,40 @@ function delete_receipt(i) {
     showReceipt();
 }
 
-function edit_receipt(i) {
+function edit_receipt(id_) {
 
+  // Clean all dataPro
+  localStorage.setItem('product', JSON.stringify([]));
 
-  //  add_new_receipt();
-    showReceipt();
+  // Retrieve receipts from localStorage
+  let receipt = localStorage.receipt ? JSON.parse(localStorage.receipt) : [];
+
+  // Find the receipt with the given id
+  const receipt_to_edit = receipt.find((rec) => rec.id === id_);
+
+  if (!receipt_to_edit) {
+      console.error(`Receipt with id ${id_} not found.`);
+      return;
+  }
+
+  // Retrieve the product list from the found receipt
+  let dataPro = receipt_to_edit.product.map((rec) => ({
+      product_name: rec.product_name,
+      special_price: rec.special_price || 0, // Ensure property exists
+      quantity: rec.quantity,
+      id: rec.id,
+      total: rec.total,
+  }));
+
+  // Update localStorage with the new dataPro
+  localStorage.setItem('product', JSON.stringify(dataPro));
+
+  switch_to_receipt(); 
+  switch_btn.textContent=switch_btn_arr[0];
+
+  coustmer.value=receipt_to_edit.coustmer;
+  // Show updated dataPro (assumes showData function is defined)
+  showData();
 }
 
 showData();
