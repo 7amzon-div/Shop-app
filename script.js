@@ -2,6 +2,24 @@
 let switch_btn=document.getElementById("switch_btn");
 
 localStorage.clear();
+let curr_receipt_id;
+class Modes {
+
+    static ADD = "add";
+    static EDIT = "edit";
+    static DELETE = "delete";
+
+    constructor(currentMode) {
+        this.type = currentMode;
+    }
+}
+
+// Usage
+const mode = new Modes(Modes.ADD);
+console.log(mode.type); // "add"
+
+
+
 let delvary_btn =document.getElementById("delvary_btn")
 
 let coustmer=document.getElementById("coustmer")
@@ -83,7 +101,7 @@ for(let i=0;i<item.length;i++){
 }
 
 receipt =[];
-let r_count=0;
+
 
 function create_receipt(pro){
    
@@ -94,9 +112,41 @@ function create_receipt(pro){
 
 init_cards(items);
 
+function toBase(n, base = 62) {
+    const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    let result = "";
+    while (n > 0) {
+        result = chars[n % base] + result;
+        n = Math.floor(n / base);
+    }
+    return result || "0"; // Return "0" if input is 0
+}
+
+function generateReceiptId() {
+    // Get the current timestamp in seconds
+    const timestamp = Math.floor(Date.now() / 1000);
+
+    // Convert timestamp to Base 62
+    const base62Timestamp = toBase(timestamp, 62);
+
+    // Generate a 6-character random alphanumeric string
+    const randomString = Array.from({ length: 6 }, () =>
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"[
+            Math.floor(Math.random() * 62)
+        ]
+    ).join("");
+
+    // Combine timestamp and random string
+    return `${base62Timestamp}${randomString}`;
+}
+
+// Example usage
+console.log(generateReceiptId());
 
 
-function add_new_receipt(id_){
+
+
+function add_new_receipt(){
     
     // id,coustmer, cashier, date,_clock,product=[],total
    
@@ -114,41 +164,45 @@ function add_new_receipt(id_){
    total+= parseFloat(pro.total);
   }
 
-
-  const existingIndex = receipt.findIndex((rec) => (rec.coustmer === coustmer.value));
-  console.log("existingIndex"+existingIndex)
     
-  if (existingIndex !== -1) {
-      
-      console.log("existingIndex"+existingIndex)
-      receipt[existingIndex].date = date.toISOString();
-      receipt[existingIndex].product = dataPro;
-      
-      receipt[existingIndex].total=total
-      
-  }
-  else{
 
+console.log("modes "+mode.type)
+
+if(mode.type===Modes.ADD){
         // إضافة فاتورة الجديد
+       const id1=generateReceiptId().toString()
         let new_receipt = {
-            id:r_count,
+            id:id1,
             cashier:cashier,
             date: date.toISOString(),
            product:dataPro,
            coustmer:coustmer.value,
             total:total
             
-        };
-        
+       };
+     
+        console.log("\nnew_receipt.id_: "+new_receipt.id)
         console.log(coustmer.value)
         console.log(total)
         receipt.push(new_receipt);
-   
+   }
+    else if(mode.type===Modes.EDIT)
+    {
+        
+    receipt[curr_receipt_id].product = dataPro;
+    receipt[curr_receipt_id].date = date;        
+    receipt[curr_receipt_id].total = total;   
+    receipt[curr_receipt_id].coustmer = coustmer.value;  
+
+mode.type=Modes.ADD;
+for(pro of receipt[curr_receipt_id].product){
+   console.log(pro+"\n")
+  }
     }
     // حفظ البيانات في LocalStorage
     localStorage.setItem('receipt', JSON.stringify(receipt));
 
-    r_count+=1;
+    
 }
 
 
@@ -304,9 +358,13 @@ function showData() {
 
 delvary_btn.addEventListener("click",
     function(){
+    
+    
 add_new_receipt();
 switch_to_receipt();
 console.log("receipt added");
+
+
     }
 );
 
@@ -334,9 +392,9 @@ receiptData.forEach((receipt, i) => {
     // Close the list and the details section
     productsHTML += `</ul>
     </details><button id="delete_receipt"
-    class="delete_receipt" onClick="delete_receipt(${i})">Delete</button> 
+    class="delete_receipt" onClick="delete_receipt('${receipt.id}')">Delete</button> 
     <button id="edit_receipt"
-    class="edit_receipt" onClick="edit_receipt(${i})">edit</button>`;
+    class="edit_receipt" onClick="edit_receipt('${receipt.id}')">edit</button>`;
 });
 
 // Inject the generated HTML
@@ -354,21 +412,45 @@ function deleteData(i) {
 }
 
 
-function delete_receipt(i) {
-    let receipt = JSON.parse(localStorage.receipt);
-    receipt.splice(i, 1);
-    localStorage.receipt = JSON.stringify(receipt);
-    showReceipt();
+function delete_receipt(id) {
+    // Retrieve the receipts from localStorage
+    let receipts = localStorage.receipt ? JSON.parse(localStorage.receipt) : [];
+
+    // Find the index of the receipt with the given id
+    const index = receipts.findIndex((receipt) => receipt.id === id);
+
+    // If receipt is found, delete it
+    if (index !== -1) {
+        receipts.splice(index, 1);
+        console.log(`Receipt with id ${id} deleted successfully.`);
+    } else {
+        console.error(`Receipt with id ${id} not found.`);
+        return;
+    }
+
+    // Save the updated receipts back to localStorage
+    localStorage.setItem('receipt', JSON.stringify(receipts));
+
+    // Optionally, refresh the UI
+    showReceipt(); // Call the function to refresh the receipt table
 }
 
 function edit_receipt(id_) {
 
     clear_product();
+    console.log("id_: edit "+id_)
   // Retrieve receipts from localStorage
   let receipt = localStorage.receipt ? JSON.parse(localStorage.receipt) : [];
 
   // Find the receipt with the given id
-  const receipt_to_edit = receipt.find((rec) => rec.id === id_);
+   const receipt_to_edit = receipt.find((rec) => rec.id === id_);
+   
+ const index = receipt.findIndex((rec) => rec.id === id_);
+if (index === -1) {
+    console.error(`Receipt with id ${id_} not found.`);
+    return;
+}
+
 
   if (!receipt_to_edit) {
       console.error(`Receipt with id ${id_} not found.`);
@@ -389,7 +471,9 @@ function edit_receipt(id_) {
 
   //move to product page
   switch_to_product(); 
- 
+ mode.type=Modes.EDIT;
+console.log(mode.type); // "edit"
+curr_receipt_id=index;
 //تحديث اسم المشتري على حسب الفاتورة
   coustmer.value=receipt_to_edit.coustmer;
   
